@@ -1,30 +1,32 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerMana : MonoBehaviour
 {
+    public int mana = 100;
+    public TMP_Text manaText;
     public Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        
+        manaText.text = "Mana: " + mana;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Attack();
+        manaText.text = "Mana: " + mana;
+        UseMana();
     }
 
-    void Attack()
+    void UseMana()
     {
-        if (Keyboard.current.fKey.isPressed)
+        if (Keyboard.current != null &&
+            Keyboard.current.rKey.wasPressedThisFrame && mana >= 10)
         {
-            animator.SetBool("attack", true);
-        }
-        else
-        {
-            animator.SetBool("attack", false);
+            mana -= 10;
+            animator.SetTrigger("magic");
         }
     }
 }
